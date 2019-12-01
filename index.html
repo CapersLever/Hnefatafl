@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hnefatafl</title>
+    <style>
+        {padding: 0; margin: 0;}
+        canvas { background: #cccccc; display: block; marging: 0 auto;}
+    </style>
+</head>
+<body>
+
+<canvas id="myCanvas" width="900" height="900"></canvas>
+
+<script>
+    class Piece {
+        constructor(x, y, team) {
+            this.x = x;
+            this.y = y;
+            this.team = team;
+        }
+    }
+    let canvas = document.getElementById("myCanvas"); //reference to hmtl element
+    let ctx = canvas.getContext("2d"); //actual tool used for rendering
+    let boardRowCount = 9;
+    let boardColCount = 9;
+    let squareWidth = 100;
+    let squareHeight = 100;
+    let rad = 38;
+    //loop creates 2d array of 9x9 squares
+    let squares = [];
+    for(let c = 0; c<boardColCount; c++) {
+        squares[c] = [];
+        for(let r = 0; r<boardRowCount; r++) {
+            squares[c][r] = { x: 0, y: 0 };
+        }
+    }
+
+    function drawPieces() {
+
+    }
+    function setup() {
+        //Initial Board and Setup
+        for(let c = 0; c<boardColCount; c++) {
+            for(let r = 0; r<boardRowCount; r++) {
+                squares[c][r].x = r * 100;
+                squares[c][r].y = c * 100;
+                ctx.beginPath();
+                ctx.rect(squares[c][r].x, squares[c][r].y, squareWidth, squareHeight)
+                ctx.strokeStyle = "black";
+                ctx.stroke();
+                ctx.closePath();
+            }
+        }
+        ctx.beginPath();
+        ctx.strokeStyle = "red";
+        //DRAWING KING ESCAPE SQUARE INDICATION
+        //square[0][0]
+        ctx.moveTo(0, 0);
+        ctx.lineTo(100, 100);
+        ctx.stroke();
+        ctx.moveTo(0, 100);
+        ctx.lineTo(100, 0);
+        ctx.stroke();
+        //square[8][0]
+        ctx.moveTo(0, 800);
+        ctx.lineTo(100, 900);
+        ctx.stroke();
+        ctx.moveTo(0, 900);
+        ctx.lineTo(100, 800);
+        ctx.stroke();
+        //square[0][8]
+        ctx.moveTo(800, 0);
+        ctx.lineTo(900, 100);
+        ctx.stroke();
+        ctx.moveTo(900, 0);
+        ctx.lineTo(800, 100);
+        ctx.stroke();
+        //square[8][8]
+        ctx.moveTo(800, 800);
+        ctx.lineTo(900, 900);
+        ctx.stroke();
+        ctx.moveTo(900, 800);
+        ctx.lineTo(800, 900);
+        ctx.stroke();
+        ctx.closePath();
+        //DRAWING BLACK PIECES
+        //(0, 3), (0, 4), (0, 5), (1, 4), (3, 0), (4, 0), (5, 0), (4, 1)
+        //(8, 3), (8, 4), (8, 5), (7, 4), (3, 8), (4, 8), (5. 8), (4, 7)
+        ctx.beginPath();
+        ctx.fillStyle = "black";
+        ctx.arc(350, 50, rad, 0,Math.PI*2, false);
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(450, 50, rad, 0,Math.PI*2, false);
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(550, 50, rad, 0,Math.PI*2, false);
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(450, 150, rad, 0,Math.PI*2, false);
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(50, 350, rad, 0,Math.PI*2, false);
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(50, 450, rad, 0,Math.PI*2, false);
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(50, 550, rad, 0,Math.PI*2, false);
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(150, 450, rad, 0,Math.PI*2, false);
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(350, 850, rad, 0,Math.PI*2, false);
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(450, 850, rad, 0,Math.PI*2, false);
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(550, 850, rad, 0,Math.PI*2, false);
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(450, 750, rad, 0,Math.PI*2, false);
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(850, 350, rad, 0,Math.PI*2, false);
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(850, 450, rad, 0,Math.PI*2, false);
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(850, 550, rad, 0,Math.PI*2, false);
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(750, 450, rad, 0,Math.PI*2, false);
+        ctx.fill();
+        ctx.closePath();
+
+        //DRAWING WHITE PIECES
+        ctx.beginPath();
+        ctx.fillStyle = "white";
+        ctx.arc(450, 250, rad, 0,Math.PI*2, false);
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(450, 350, rad, 0,Math.PI*2, false);
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(450, 550, rad, 0,Math.PI*2, false);
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(450, 650, rad, 0,Math.PI*2, false);
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(250, 450, rad, 0,Math.PI*2, false);
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(350, 450, rad, 0,Math.PI*2, false);
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(550, 450, rad, 0,Math.PI*2, false);
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(650, 450, rad, 0,Math.PI*2, false);
+        ctx.fill();
+        ctx.closePath();
+        //KING PIECE
+
+        ctx.beginPath();
+        ctx.fillStyle = "blue";
+        ctx.arc(450, 450, rad, 0,Math.PI*2, false);
+        ctx.fill();
+        ctx.closePath();
+    }
+
+    setup();
+    function draw() {
+        //draw code
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for(let c = 0; c<boardColCount; c++) {
+            for(let r = 0; r<boardRowCount; r++) {
+                squares[c][r].x = r * 100;
+                squares[c][r].y = c * 100;
+                ctx.beginPath();
+                ctx.rect(squares[c][r].x, squares[c][r].y, squareWidth, squareHeight)
+                ctx.strokeStyle = "black";
+                ctx.stroke();
+                ctx.closePath();
+            }
+        }
+        ctx.beginPath();
+        ctx.strokeStyle = "red";
+        //DRAWING KING ESCAPE SQUARE INDICATION
+        //square[0][0]
+        ctx.moveTo(0, 0);
+        ctx.lineTo(100, 100);
+        ctx.stroke();
+        ctx.moveTo(0, 100);
+        ctx.lineTo(100, 0);
+        ctx.stroke();
+        //square[8][0]
+        ctx.moveTo(0, 800);
+        ctx.lineTo(100, 900);
+        ctx.stroke();
+        ctx.moveTo(0, 900);
+        ctx.lineTo(100, 800);
+        ctx.stroke();
+        //square[0][8]
+        ctx.moveTo(800, 0);
+        ctx.lineTo(900, 100);
+        ctx.stroke();
+        ctx.moveTo(900, 0);
+        ctx.lineTo(800, 100);
+        ctx.stroke();
+        //square[8][8]
+        ctx.moveTo(800, 800);
+        ctx.lineTo(900, 900);
+        ctx.stroke();
+        ctx.moveTo(900, 800);
+        ctx.lineTo(800, 900);
+        ctx.stroke();
+        ctx.closePath();
+        drawPieces();
+    }
+    setInterval(draw, 100); //will run draw function every 10 miliseconds
+
+</script>
+
+</body>
+</html>
